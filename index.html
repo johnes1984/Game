@@ -33,6 +33,11 @@
             container = document.createElement( 'div' );
             document.body.appendChild( container );
             camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.5, 1500 );
+            
+            //reubicar la camara
+            camera.position.y = 4;
+            camera.position.x = 10;
+            camera.position.z = 10;
             FOLLOW_CAMERA = true;
             
             //creando escena
@@ -52,18 +57,30 @@
           
             //agregar objetos
             
+            
             //agregar piso
+            //crea el objeto plano
             var planeGeometry = new THREE.PlaneGeometry(60,40);
+            //crea el material con el color
 			var planematerial = new THREE.MeshLambertMaterial({color:0xcccccc});
+            //une el plano con el material
 			var plane = new THREE.Mesh(planeGeometry,planematerial);
 			plane.receiveShadow = true;
-			plane.rotation.x = -0.5*Math.PI;
-            plane.position.x = 15;
-			plane.position.y = 0;
-			plane.position.z = 0;
+			
+            //define el grupo para contener el plano
+            var groupplano = new THREE.Group();
+            //adiciona el plano al grupo
+            groupplano.add(plane);  
+            //posiciona el grupo
+            groupplano.position.x = 0;
+			groupplano.position.y = 0;
+			groupplano.position.z = -80;
+            plane.rotation.x = -0.5*Math.PI;
+            groupplano.rotation.y = 1;
+            groupplano.rotation.z = 1;
+            //agrega el grupo a la escena
+            scene.add(groupplano);
             
-            
-            scene.add(plane);
             
             
             //proceso de renderizado de todo en proyecto
@@ -71,11 +88,27 @@
             renderer.setPixelRatio( window.devicePixelRatio );
             renderer.setSize( window.innerWidth, window.innerHeight );
             container.appendChild( renderer.domElement );
+            
+            //compilar la escena con relacion a la camara
+            renderer.render( scene, camera );
+            
+            
         }
         
 
         Init();
+       
+        
+        
+         
 
+        
+        
+			
+        
+      
+  
+        
         
     </script>
         

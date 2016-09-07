@@ -52,7 +52,13 @@
           
             //agregar objetos
             
-            
+            //agregar piso
+            var planeGeometry = new THREE.PlaneGeometry(60,40);
+			var planematerial = new THREE.MeshLambertMaterial({color:0xcccccc});
+			var plane = new THREE.Mesh(planeGeometry,planematerial);
+			plane.receiveShadow = true;
+			plane.rotation.x = -0.5*Math.PI;
+            scene.add(plane);
             
             
             //proceso de renderizado de todo en proyecto

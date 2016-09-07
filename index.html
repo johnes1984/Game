@@ -10,11 +10,64 @@
     <script src="js/three.js"></script>
     <script src="js/OBJLoader.js"></script>
     <script src="js/MTLLoader.js"></script>
+    <script src="js/dat.gui.min.js"></script>
     <script src="js/CSS3DRenderer.js"></script>
         
     </head>
     <body>
     
-    
+     
+        
+    <script>
+        
+        var ambient;
+        var container;
+        var camera; 
+        var scene;
+        var renderer;
+        
+        
+        function Init()
+        {
+            //creando camara
+            container = document.createElement( 'div' );
+            document.body.appendChild( container );
+            camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.5, 1500 );
+            FOLLOW_CAMERA = true;
+            
+            //creando escena
+            scene = new THREE.Scene();
+            //coloca color al ambiente
+            ambient = new THREE.AmbientLight( 0x444444 );
+            //agrega ambiente a la escena
+			scene.add( ambient );
+            
+            //creando luces en el escenario
+            var directionalLight = new THREE.DirectionalLight( 0xffeedd );
+            //coloca direccion a la luz
+			directionalLight.position.set( 0, 0, 1 ).normalize();
+            // agregando luz a la escena
+			scene.add( directionalLight );
+            
+          
+            //agregar objetos
+            
+            
+            
+            
+            //proceso de renderizado de todo en proyecto
+            renderer = new THREE.WebGLRenderer();
+            renderer.setPixelRatio( window.devicePixelRatio );
+            renderer.setSize( window.innerWidth, window.innerHeight );
+            container.appendChild( renderer.domElement );
+        }
+        
+
+        Init();
+
+        
+    </script>
+        
+        
     </body>
 </html>

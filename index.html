@@ -25,6 +25,8 @@
         var camera; 
         var scene;
         var renderer;
+         //define el grupo para contener el plano
+        var groupplano = new THREE.Group();
         
         
         function Init()
@@ -37,7 +39,7 @@
             //reubicar la camara
             camera.position.y = 4;
             camera.position.x = 10;
-            camera.position.z = 10;
+            camera.position.z = 50;
             FOLLOW_CAMERA = true;
             
             //creando escena
@@ -60,15 +62,14 @@
             
             //agregar piso
             //crea el objeto plano
-            var planeGeometry = new THREE.PlaneGeometry(60,40);
+            var planeGeometry = new THREE.PlaneGeometry(100,100);
             //crea el material con el color
 			var planematerial = new THREE.MeshLambertMaterial({color:0xcccccc});
             //une el plano con el material
 			var plane = new THREE.Mesh(planeGeometry,planematerial);
 			plane.receiveShadow = true;
 			
-            //define el grupo para contener el plano
-            var groupplano = new THREE.Group();
+           
             //adiciona el plano al grupo
             groupplano.add(plane);  
             //posiciona el grupo
@@ -76,8 +77,9 @@
 			groupplano.position.y = 0;
 			groupplano.position.z = -80;
             plane.rotation.x = -0.5*Math.PI;
-            groupplano.rotation.y = 1;
-            groupplano.rotation.z = 1;
+            groupplano.rotation.x = 0.6;
+            groupplano.rotation.y = 0.7;
+            groupplano.rotation.z = 0.5;
             //agrega el grupo a la escena
             scene.add(groupplano);
             
@@ -97,11 +99,46 @@
         
 
         Init();
-       
+        animate();
         
-        
-         
+function animate() 
+{
+requestAnimationFrame( animate );
+render();
+}
+     
+function render()
+{
+    //camera.position.x = (groupplano.position.x -10 );
+    //camera.lookAt( groupplano.position );
+    renderer.render( scene, camera );
+}
 
+
+   var gui = new dat.GUI(); 
+
+   var f = gui.addFolder('Camera LookAt');
+   f.add(camera.position, 'y').min(0).max(100);
+   f.add(camera.position, 'x').min(0).max(100);
+   f.add(camera.position, 'z').min(0).max(100);
+   f.open();
+
+
+   var guiplano = gui.addFolder('plano ubicacion');
+   guiplano.add(groupplano.position, 'y').min(-100).max(100);
+   guiplano.add(groupplano.position, 'x').min(-100).max(100);
+   guiplano.add(groupplano.position, 'z').min(-200).max(0);
+   guiplano.open();
+
+    var guiplanor = gui.addFolder('plano rotacion');
+   guiplanor.add(groupplano.rotation, 'y').min(0).max(10).step(0.05);
+   guiplanor.add(groupplano.rotation, 'x').min(0).max(10).step(0.05);
+   guiplanor.add(groupplano.rotation, 'z').min(0).max(10).step(0.05);
+   guiplanor.open();
+
+
+  
+render()
         
         
 			
